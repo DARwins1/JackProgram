@@ -1,0 +1,60 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/09/Quiz/Main.jack
+
+// Asks the user to solve increasingly large multiplication problems.
+// If the user answers correctly, then they are asked a problem with larger operands.
+// If the user answers incorrectly, they are asked the same problem again.
+// Inputting nothing quits the program.
+class Main {
+   function void main() {
+      var int num1, num2, ans;
+      var String input;
+
+      let num1 = 1;
+      let num2 = 1;
+      let ans = num1 * num2; // Should automatically call Math.multiply()
+      let input = Main.ask(num1, num2); // User input...
+     
+      // Loop for as long as the user keeps giving answers
+      while (input.length() > 0) {
+         if (input.intValue() = ans) {
+            // Answered correctly, update values
+            do Output.printString("Correct!");
+            do Output.println();
+            let num1 = num1 + 2;
+            let num2 = num2 + 1;
+            let ans = num1 * num2;
+         }
+         else {
+            do Output.printString("Incorrect.");
+            do Output.println();
+         }
+         // Change nothing if the user answered incorrectly
+
+         if (input.length() > 0) {
+            let input = Main.ask(num1, num2); // Ask again
+         }
+      }
+
+      do Output.printString("Quitting...");
+      return;
+   }
+
+   // Ask the user to solve num1 * num2
+   function String ask(int num1, int num2) {
+      var String x, y;
+      let x = String.new(16);
+      do x.setInt(num1);
+      let y = String.new(16);
+      do y.setInt(num2);
+
+      do Output.printString(x);
+      do Output.printString(" * ");
+      do Output.printString(y);
+      do Output.printString(" =");
+
+      return Keyboard.readLine(" ");
+   }
+}
